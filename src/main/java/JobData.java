@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -27,6 +24,8 @@ public class JobData {
      * @param field The column to retrieve values from
      * @return List of all of the values of the given field
      */
+
+    // Read this methode well and try to understand what going in!
     public static ArrayList<String> findAll(String field) {
 
         // load data, if not already loaded
@@ -55,6 +54,7 @@ public class JobData {
 
         // Bonus mission; normal version returns allJobs
         return new ArrayList<>(allJobs);
+
     }
 
     /**
@@ -73,13 +73,14 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
+        //iterate over an ArrayList of jobs.
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -99,7 +100,31 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+
+        //iterate over an ArrayList of jobs.
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> job : allJobs) {
+
+            for(Map.Entry <String, String> entry: job.entrySet()){
+            // this variable get a value and make  that case-Insensitive
+            String findValue = entry.getValue().toLowerCase();
+            if (findValue.contains(value.toLowerCase())) {
+                //line 112 checked that we should have duplicate
+                if(!jobs.contains(job)) {
+                    jobs.add(job);
+                    }
+                }
+            }
+
+        }
+
+        return jobs;
+
+
+
+
+
     }
 
     /**
@@ -120,6 +145,8 @@ public class JobData {
             List<CSVRecord> records = parser.getRecords();
             Integer numberOfColumns = records.get(0).size();
             String[] headers = parser.getHeaderMap().keySet().toArray(new String[numberOfColumns]);
+
+// Things to understand : it creates and outputs a value that is called all jobs
 
             allJobs = new ArrayList<>();
 

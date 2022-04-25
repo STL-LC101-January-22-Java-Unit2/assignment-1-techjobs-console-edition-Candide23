@@ -118,8 +118,25 @@ public class TechJobs {
     }
 
     // Print a list of jobs
+    //iterate over an ArrayList of jobs.
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        //this line 124 it's a methode which Returns the number of items in the map, as an int.
+        //if
+        if (someJobs.size()!=0) {
+            for (HashMap<String, String> job : someJobs) {
+                //System.out.print("\n");
+                System.out.println("\n*****");
+                //iterate through key/value entries
+                for (String key : job.keySet()) {
+                    System.out.println(key + ": " + job.get(key));
+                }
+                System.out.println("*****");
+            }
+        } else {
+            System.out.print("No Results");
+        }
 
-        System.out.println("printJobs is not implemented yet");
     }
 }
+
+
